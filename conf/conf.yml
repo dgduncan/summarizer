@@ -1,0 +1,8 @@
+youtube:
+  - name: "Tech Talk"
+    rss_url: "https://www.youtube.com/feeds/videos.xml?channel_id=UC1234567890"
+    prompt: "Provide a brief summary of the key topics discussed in this video."
+podcast:
+  - name: "The Daily"
+    rss_url: "https://rss.art19.com/the-daily"
+    prompt: "Summarize the main points of this podcast episode in a concise manner."
