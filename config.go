@@ -9,8 +9,8 @@ import (
 
 // Config represents the structure of the configuration file
 type Config struct {
-	YouTube []YouTubeConfig `yaml:"youtube"`
-	Podcast []PodcastConfig `yaml:"podcast"`
+	YouTube  []YouTubeConfig `yaml:"youtube"`
+	Podcasts []PodcastConfig `yaml:"podcast"`
 }
 
 // YouTubeConfig represents the configuration for YouTube

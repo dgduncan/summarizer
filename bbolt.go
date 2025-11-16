@@ -9,20 +9,21 @@ import (
 const (
 	path = "mydb.db"
 
-	showsBucket = "episodes"
+	ShowsBucket    = "episodes"
+	SummarysBucket = "summaries"
 )
 
-func Set(k, v string, db *bolt.DB) error {
+func Set(b, k, v string, db *bolt.DB) error {
 	return db.Update(func(tx *bolt.Tx) error {
-		b := tx.Bucket([]byte(showsBucket))
+		b := tx.Bucket([]byte(b))
 		return b.Put([]byte(k), []byte(v))
 	})
 }
 
-func Get(k string, db *bolt.DB) (string, error) {
+func Get(b, k string, db *bolt.DB) (string, error) {
 	var val []byte
 	err := db.View(func(tx *bolt.Tx) error {
-		val = tx.Bucket([]byte(showsBucket)).Get([]byte(k))
+		val = tx.Bucket([]byte(b)).Get([]byte(k))
 		return nil
 	})
 
@@ -36,7 +37,12 @@ func Open() (*bolt.DB, error) {
 	}
 
 	if err := db.Update(func(tx *bolt.Tx) error {
-		_, err := tx.CreateBucketIfNotExists([]byte(showsBucket))
+		_, err := tx.CreateBucketIfNotExists([]byte(ShowsBucket))
+		if err != nil {
+			return fmt.Errorf("create bucket: %s", err)
+		}
+
+		_, err = tx.CreateBucketIfNotExists([]byte(SummarysBucket))
 		if err != nil {
 			return fmt.Errorf("create bucket: %s", err)
 		}

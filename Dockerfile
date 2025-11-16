@@ -10,8 +10,10 @@ RUN apt-get update && \
 # TODO : build GOLANG from source
 
 RUN rm -rf /usr/local/go
-RUN wget2 https://go.dev/dl/go1.25.4.linux-amd64.tar.gz
-RUN tar -C /usr/local -xzf go1.25.4.linux-amd64.tar.gz
+RUN ARCH=$(dpkg --print-architecture) && \
+    wget2 https://go.dev/dl/go1.23.3.linux-${ARCH}.tar.gz && \
+    tar -C /usr/local -xzf go1.23.3.linux-${ARCH}.tar.gz && \
+    rm go1.23.3.linux-${ARCH}.tar.gz
 ENV PATH="/usr/local/go/bin:${PATH}"
 
 RUN wget2 https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -O /usr/local/bin/yt-dlp
@@ -23,10 +25,11 @@ RUN yt-dlp --version
 RUN git clone https://github.com/ggml-org/whisper.cpp.git
 WORKDIR /app/whisper.cpp
 
-RUN sh ./models/download-ggml-model.sh base.en
+RUN sh ./models/download-ggml-model.sh small.en
 
 RUN cmake -B build
 RUN cmake --build build -j --config Release
+RUN ./build/bin/quantize models/ggml-small.en.bin models/ggml-small.en-q8_0.bin q8_0
 
 # ------------------------------
 

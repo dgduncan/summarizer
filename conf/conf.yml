@@ -3,6 +3,29 @@ youtube:
     rss_url: "https://www.youtube.com/feeds/videos.xml?channel_id=UC1234567890"
     prompt: "Provide a brief summary of the key topics discussed in this video."
 podcast:
-  - name: "The Daily"
-    rss_url: "https://rss.art19.com/the-daily"
-    prompt: "Summarize the main points of this podcast episode in a concise manner."
+  - name: "Prof G Markets"
+    rss_url: "https://feeds.megaphone.fm/profgmarkets"
+    prompt: |
+      Please provide a concise summary of the key takeaways from the following podcast episode.
+
+      The content may include a Simple Market Update (covering current economic news and company earnings) and/or a Guest Interview (a deep dive with an expert).
+
+      Use a clear, informative style.
+
+      Present the summary using concise bullet points under the main categories (Market Update, Guest Insights).
+
+      Focus on the central thesis, specific analysis, and actionable conclusions presented by the hosts and/or guests.
+
+      Episode Details
+      Title: [Insert the YouTube Video Title Here]
+
+      Type/Guest Context: [Example: "Simple Market Update" / "Guest Interview featuring [Guest Name]" / "Mixed Format"]
+
+      Content (Transcript or Key Topics List): [Insert the full transcript or a detailed list of the episode's main discussion points/topics here.]
+
+      Summary Categories (Guide the structure of your response)
+      Market & Economic Outlook: Summarize the hosts'/guests' main arguments about the current market, specific sector valuations, and general economic trends.
+
+      Key Company/Sector Analysis: Note the specific companies, products, or sectors analyzed and the verdict on their performance or future prospects.
+
+      Guest Insights & Conclusions (If applicable): Summarize the most striking or actionable advice provided by the guest, including their personal philosophy or long-term predictions.
