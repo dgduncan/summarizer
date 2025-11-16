@@ -4,6 +4,8 @@ services:
     container_name: summarizer
     volumes:
       - summarizer_data:/app
+    environment:
+      - CONFIG_PATH=conf/conf.yml
     depends_on:
       - ollama
   ollama:
