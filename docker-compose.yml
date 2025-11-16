@@ -2,11 +2,10 @@ services:
   summarizer:
     build: .
     container_name: summarizer
+    volumes:
+      - summarizer_data:/app
     depends_on:
       - ollama
-    # volumes:
-    #   - .:/app
-    # working_dir: /app
   ollama:
     image: ollama/ollama:latest
     container_name: ollama
@@ -23,3 +22,4 @@ services:
     entrypoint: ["/entrypoint.sh"]
 volumes:
   ollama_data:
+  summarizer_data:
