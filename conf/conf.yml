@@ -29,3 +29,6 @@ podcast:
       Key Company/Sector Analysis: Note the specific companies, products, or sectors analyzed and the verdict on their performance or future prospects.
 
       Guest Insights & Conclusions (If applicable): Summarize the most striking or actionable advice provided by the guest, including their personal philosophy or long-term predictions.
+
+logging:
+  level: "debug"

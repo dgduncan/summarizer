@@ -7,13 +7,14 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/mmcdole/gofeed"
 )
 
 const (
-	defaultOutPath = "%s.mp3"
+	defaultFileType = "%s.mp3"
 )
 
 const (
@@ -35,10 +36,10 @@ func GetLatestEpisode(feed *gofeed.Feed) *gofeed.Item {
 	return feed.Items[0]
 }
 
-func DownloadMP3(ctx context.Context, url, name string) error {
+func DownloadPodcast(ctx context.Context, url, name, dir string) (string, error) {
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, http.NoBody)
 	if err != nil {
-		return err
+		return "", err
 	}
 	req.Header.Set("User-Agent", "Overcast/2025.1 (macOS) GitHubCopilot")
 	req.Header.Set("Accept", "audio/mpeg,*/*;q=0.8")
@@ -49,21 +50,29 @@ func DownloadMP3(ctx context.Context, url, name string) error {
 	}
 	resp, err := client.Do(req)
 	if err != nil {
-		return err
+		return "", err
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode < 200 || resp.StatusCode > 299 {
-		return fmt.Errorf("bad status: %s", resp.Status)
+		return "", fmt.Errorf("bad status: %s", resp.Status)
 	}
 
-	f, err := os.Create(fmt.Sprintf(defaultOutPath, name))
+	if err := os.MkdirAll(dir, 0755); err != nil {
+		return "", err
+	}
+
+	outPath := filepath.Join(dir, fmt.Sprintf(defaultFileType, name))
+	f, err := os.Create(outPath)
 	if err != nil {
 		log.Println("Error creating file:", err)
-		return err
+		return "", err
 	}
 	defer f.Close()
 
 	_, err = io.Copy(f, resp.Body)
-	return err
+	if err != nil {
+		return "", err
+	}
+	return outPath, nil
 }

@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+python-multipart
+# Install standard whisperx. 
+# Note: The Dockerfile handles the complex torch/cuda install to avoid conflicts.
+whisperx

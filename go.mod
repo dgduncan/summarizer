@@ -4,6 +4,7 @@ go 1.24.1
 
 require (
 	github.com/goccy/go-yaml v1.18.0
+	github.com/mattn/go-sqlite3 v1.14.32
 	github.com/mmcdole/gofeed v1.3.0
 	github.com/ollama/ollama v0.12.11
 	go.etcd.io/bbolt v1.4.3

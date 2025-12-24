@@ -2,6 +2,7 @@ package summarizer
 
 import (
 	"io"
+	"log/slog"
 	"os"
 
 	"github.com/goccy/go-yaml"
@@ -11,6 +12,7 @@ import (
 type Config struct {
 	YouTube  []YouTubeConfig `yaml:"youtube"`
 	Podcasts []PodcastConfig `yaml:"podcast"`
+	Logging  Logging         `yaml:"logging"`
 }
 
 // YouTubeConfig represents the configuration for YouTube
@@ -25,6 +27,23 @@ type PodcastConfig struct {
 	Name   string `yaml:"name"`
 	RssURL string `yaml:"rss_url"`
 	Prompt string `yaml:"prompt"`
+}
+
+type Logging struct {
+	Level string `yaml:"level"`
+}
+
+func (lc Logging) ToLogger(w io.Writer) *slog.Logger {
+	var level slog.Level
+	if err := level.UnmarshalText([]byte(lc.Level)); err != nil {
+		level = slog.LevelInfo
+	}
+
+	leveler := new(slog.LevelVar)
+	leveler.Set(level)
+	return slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
+		Level: leveler,
+	}))
 }
 
 // LoadConfig reads the YAML configuration file and unmarshals it into a Config struct

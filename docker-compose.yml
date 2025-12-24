@@ -6,22 +6,22 @@ services:
       - summarizer_data:/app
     environment:
       - CONFIG_PATH=conf/conf.yml
-    depends_on:
-      - ollama
-  ollama:
-    image: ollama/ollama:latest
-    container_name: ollama
-    ports:
-      - "11434:11434"
-    environment:
-      # --- Define the model you want to pull on startup ---
-      - OLLAMA_MODEL=llama3.1:8b
-    volumes:
-      # This volume persists your models and data
-      - ollama_data:/root/.ollama
-      # This mounts your custom script into the container
-      - ./scripts/ollama_entrypoint.sh:/entrypoint.sh
-    entrypoint: ["/entrypoint.sh"]
+    # depends_on:
+    #   - ollama
+  # ollama:
+  #   image: ollama/ollama:latest
+  #   container_name: ollama
+  #   ports:
+  #     - "11434:11434"
+  #   environment:
+  #     # --- Define the model you want to pull on startup ---
+  #     - OLLAMA_MODEL=llama3.1:8b
+  #   volumes:
+  #     # This volume persists your models and data
+  #     - ollama_data:/root/.ollama
+  #     # This mounts your custom script into the container
+  #     - ./scripts/ollama_entrypoint.sh:/entrypoint.sh
+  #   entrypoint: ["/entrypoint.sh"]
 volumes:
-  ollama_data:
+  # ollama_data:
   summarizer_data:
